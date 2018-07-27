@@ -1,57 +1,42 @@
 
 <?php
-	//include creds
-	
+	include "common/_connection.php"; //comment to use csc
+	//include "common/_connectionAzure.php"; //uncomment to use azure
+
 	function sqlQuery($sql, $params)
 	{
-		// make creds global so they are accessible within the function
-//		include "sqlCreds.php";
+		try
+		{
+			$conn = Db::getInstance(); //comment to use csc
+			//$conn = DbAzure::getInstance();	//uncomment to use azure
 
+			//check for params
+			if($params == "none"){
+				$result = sqlsrv_query($conn, $sql);
+			} else {
+				$result = sqlsrv_query($conn, $sql, $params);
+			}
 
-		try  
-		{  
-			/*
-			$serverName = $sqlServer;  
-			$connectionOptions = array("Database"=>$sqlDatabase,  
-				"Uid"=>$sqlUid, "PWD"=>$sqlPWD);  
-				
-			$conn = sqlsrv_connect($serverName, $connectionOptions);  
-			*/
-			
-			$serverName = "countboard.database.windows.net"; //serverName\instanceName
-			$connectionInfo = array( "Database"=>"countboard", "UID"=>"e7646c78-5ff9-4b4d-8d10-8cb4b5bed0dd", "PWD"=>"StandAndBeCounted!");
-			$conn = sqlsrv_connect( $serverName, $connectionInfo);
+			if ($result === false) {
+					die(print_r(sqlsrv_errors(), true));
+			}else{
+				$json = array();
 
-			//check for params	
-			if($params == "none"){$queryReview = sqlsrv_query($conn, $sql);}
-			else {$queryReview = sqlsrv_query($conn, $sql, $params);}
-			
+				do {
+				     while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+				     	$json[] = $row;
+				     }
+				} while ( sqlsrv_next_result($result) );
 
+				sqlsrv_free_stmt($result);
+				sqlsrv_close($conn);
 
-$json = array();
- 
-do {
-     while ($row = sqlsrv_fetch_array($queryReview, SQLSRV_FETCH_ASSOC)) {
-     $json[] = $row;
-     }
-} while ( sqlsrv_next_result($queryReview) );
- 
-/* Run the tabular results through json_encode() */
-/* And ensure numbers don't get cast to trings */
-return json_encode($json);
-
-			
-			
-		//	echo $queryReview;
-		//$queryReview = sqlsrv_query($conn, $sql, $params);
-		//$queryReview = sqlsrv_query($conn, $sql);
-			//($queryReview);//return the data if there is any
-			sqlsrv_free_stmt($queryReview);  
-			sqlsrv_close($conn);
-		}  
-		catch(Exception $e)  
-		{  
-			echo("Error!");  
+				return json_encode($json);
+			}
+		}
+		catch(Exception $e)
+		{
+			echo("Error!");
 		}
 	}
 ?>
