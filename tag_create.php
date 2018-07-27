@@ -79,12 +79,14 @@ $rfid = $request->rfid;
 $usb = $request->usb;
 $facility = $request->facility;
 $location = $request->location;
+$description_en = $request->description_en;
+$description_fr = $request->description_fr;
 $bedid = $request->bedid;
 $uuid = UUID::v4();
 
 
-$sql = "insert into countboard.tags (uuid, rfid, usb, tagtype, bedid, facility, location,  createddate, active) values (?,?,?,?,?,?,?, SYSDATETIME(), 1)";
-$params = array( 	                $uuid, $rfid, $usb, $tagtype, $bedid, $facility,  $location			); 		//establishing params prevents SQL Injection into the DB}
+$sql = "insert into countboard.tags (uuid, rfid, usb, tagtype, bedid, description_en, description_fr, facility, location,  createddate, active) values (?,?,?,?,?,?,?,?,?, SYSDATETIME(), 1)";
+$params = array( 	                $uuid, $rfid, $usb, $tagtype, $bedid, $description_en, $description_fr, $facility,  $location			); 		//establishing params prevents SQL Injection into the DB}
 $jsonResponse = sqlQuery($sql, $params); //submit the query to the DB
 
 }
