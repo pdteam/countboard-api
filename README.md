@@ -12,7 +12,8 @@ create schema countboard;
 
 
 
-/****** Object:  Table [countboard].[tags]    Script Date: 2018-07-26 10:16:14 PM ******/
+
+/****** Object:  Table [countboard].[tags]    Script Date: 2018-07-27 6:54:01 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -46,8 +47,7 @@ GO
 
 
 
-
-/****** Object:  Table [countboard].[taps]    Script Date: 2018-07-26 10:16:57 PM ******/
+/****** Object:  Table [countboard].[taps]    Script Date: 2018-07-27 6:55:20 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -58,9 +58,12 @@ CREATE TABLE [countboard].[taps](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[uuid] [nvarchar](50) NOT NULL,
 	[device] [nvarchar](50) NULL,
+	[facility] [nvarchar](50) NULL,
 	[location] [nvarchar](50) NULL,
+	[locationuuid] [nvarchar](50) NULL,
 	[rfid] [nvarchar](50) NULL,
 	[usb] [nvarchar](50) NULL,
+	[inout] [int] NULL,
 	[time] [bigint] NULL,
 	[createddate] [datetime2](7) NULL,
 	[deactivateddate] [datetime2](7) NULL,
@@ -71,5 +74,6 @@ PRIMARY KEY CLUSTERED
 )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+
 
 
