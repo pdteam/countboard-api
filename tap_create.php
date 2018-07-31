@@ -1,106 +1,34 @@
 <?php
+  header('Access-Control-Allow-Origin: *');
 
-header('Access-Control-Allow-Origin: *');
+  include 'sqlQuery.php';
+  include 'uuid.php';
 
-//start of standard header
-    include 'sqlQuery.php';
-    include 'uuid.php';
-    
-    //validate that the session is valid
+  $postdata = file_get_contents("php://input");
+  $request = json_decode($postdata);
 
-    
-/*
-//verify if the session is active
-	session_start();
-	if(isset($_SESSION["uuidsubscription"]))
-	{
-		$uuidsubscription = $_SESSION["uuidsubscription"];
-		$uuididentity = $_SESSION["uuidvisitor"];
-		$uuidsession = $_SESSION["uuidsession"];
-	}
-	else
-	{
-		//reset any session variables currently set
-		session_unset(); session_destroy(); die();		// load nothing further on this script
-	}
+  $uuid = $request->uuid;
+  $device = $request->device;
+  $facility = $request->facility;
+  $location = $request->location;
+  $locationuuid = $request->locationuuid;
+  $rfid = $request->rfid;
+  $usb = $request->usb;
+  $inout = $request->inout;
+  $time = $request->time;
 
-//end of standard header
-	$postdata = file_get_contents("php://input");
-	$request = json_decode($postdata);
-*/
-//data block
-	//$blurfocus = $request->blurfocus;
+  /*
+  uuid: this.decryptedPayload.uuid,
+  device: this.decryptedPayload.device,
+  location: this.decryptedPayload.location,
+  rfid: this.decryptedPayload.rfid,
+  usb: null,
+  inout: inout,
+  time: this.decryptedPayload.time
+  */
 
-    /*
-    --data model
-    [ID] [int] IDENTITY(1,1) NOT NULL,
-	[uuid] [nvarchar](50) NOT NULL,
-	[rfid] [nvarchar](50)  NULL,
-	[usb] [nvarchar](50)  NULL,
-	[tagtype] [nvarchar](50) NOT NULL,
-	[OID] [nvarchar](50) NULL,
-	[FPS] [nvarchar](50) NULL,
-	[longitude] [float] NULL,
-	[latitude] [float] NULL,
-	[description_en] [nvarchar](100) NULL,
-	[description_fr] [nvarchar](100) NULL,
-	[createddate] [datetime2](7) not NULL,
-	[deactivateddate] [datetime2](7) NULL,
-    [active] [int] not NULL,
-    */
-
-$postdata = file_get_contents("php://input");
-$request = json_decode($postdata);
-
-$uuid = $request->uuid;
-$device = $request->device;
-$facility = $request->facility;
-$location = $request->location;
-$locationuuid = $request->locationuuid;
-$rfid = $request->rfid;
-$usb = $request->usb;
-$inout = $request->inout;
-$time = $request->time;
-
-/*
-uuid: this.decryptedPayload.uuid,
-device: this.decryptedPayload.device,
-location: this.decryptedPayload.location,
-rfid: this.decryptedPayload.rfid,
-usb: null,
-inout: inout,
-time: this.decryptedPayload.time
-*/
-
-
-$sql = "insert into countboard.taps (uuid, device, facility,  location,  locationuuid,  rfid,   usb, inout,  time,  createddate, active) values (?,?,?,?,?,?,?,?,?, SYSDATETIME(), 1)";
-$params = array( 	               $uuid, $device, $facility, $location, $locationuuid, $rfid, $usb, $inout, $time			); 		//establishing params prevents SQL Injection into the DB}
-$jsonResponse = sqlQuery($sql, $params); //submit the query to the DB
-echo '{"response":"tap created"}';
-
-
-/*
-if($tagtype == 'location')
-{
-//offenders tags
-$rfid = $request->rfid;
-$usb = $request->usb;
-$description_en = $request->description_en;
-$description_fr = $request->description_fr;
-$longitude = $request->longitude;
-$latitude = $request->latitude;
-
-$sql = "insert into countboard.tags (uuid, rfid, usb, tagtype, longitude, latitude, description_en, description_fr  createddate, active) values (?,?,?,?,?,? SYSDATETIME(), 1)";
-$params = array( 		UUID::v4(), $rfid, $usb, $tagtype, $longitude, $latitude, $description_en, $description_fr			); 		//establishing params prevents SQL Injection into the DB}
-$jsonResponse = sqlQuery($sql, $params); //submit the query to the DB
-
-}
-
-//echo $jsonResponse;
-
-
-//echo '{"response":"' . $tagtype  .' tag created"}';
-*/
-//echo $postdata;//
-
+  $sql = "INSERT INTO [dbo].taps (uuid, device, facility,  location,  locationuuid, rfid, usb, inout, [time], createddate, active)
+          VALUES (?,?,?,?,?,?,?,?,?, SYSDATETIME(), ?)";
+  $params = array($uuid, $device, $facility, $location, $locationuuid, $rfid, $usb, $inout, $time, 1); 		//establishing params prevents SQL Injection into the DB}
+  $jsonResponse = sqlQuery($sql, $params); //submit the query to the DB
 ?>
