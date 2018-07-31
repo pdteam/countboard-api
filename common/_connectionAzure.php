@@ -2,9 +2,9 @@
     define('SERVER_NAME', 'countboard.database.windows.net');
     define('DATABASE_NAME', 'countboard');
     define('USERNAME', 'e7646c78-5ff9-4b4d-8d10-8cb4b5bed0dd');
-    define('PASSWORD', 'StandAndBeCounted');
+    define('PASSWORD', 'StandAndBeCounted!');
 
-    class DbAzure {
+    class Db {
         private static $instance = NULL;
         private function __construct() {}
         private function __clone() {}
