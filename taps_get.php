@@ -8,7 +8,7 @@
   $facility = $variables[sizeOf($variables)-2]; //the first variable
   $location = $variables[sizeOf($variables)-1]; //the first variable
 
-  $sql = "SELECT TOP (5) * FROM [dbo].taps WHERE facility = ? AND location = ? AND active = 1 ORDER BY [time] desc";
+  $sql = "SELECT TOP (50) * FROM [dbo].taps WHERE facility = ? AND location = ? AND active = 1 ORDER BY [time] desc";
   $params = array($facility, $location);
   $jsonResponse = sqlQuery($sql, $params);
   echo $jsonResponse;

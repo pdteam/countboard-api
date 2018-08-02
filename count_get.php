@@ -66,11 +66,21 @@ $facility = $variables[sizeOf($variables)-2]; //the first variable
 $location = $variables[sizeOf($variables)-1]; //the first variable
 
 
+
+$sql = "
+select COALESCE([locationuuid],'internaltransit') as 'locationuuid' , count(rfid) as 'count' from dbo.tags 
+where [facility] = ? and [location] = ? and active = 1
+group by [locationuuid]
+";
+
+/*
 $sql = "
 	select [locationuuid], sum(inout) as 'count', max([time]) as 'largesttime' from countboard.taps 
 	where [facility] = ? and [location] = ? and active = 1
 	group by [locationuuid]
-";
+";*/
+
+
 $params = array( $facility, $location ); 		//establishing params prevents SQL Injection into the DB}
 $jsonResponse = sqlQuery($sql, $params); //submit the query to the DB
 echo $jsonResponse;

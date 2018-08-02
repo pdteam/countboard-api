@@ -10,6 +10,8 @@
 			$conn = Db::getInstance(); //comment to use csc
 			//$conn = DbAzure::getInstance();	//uncomment to use azure
 
+
+		//	echo $conn;
 			//check for params
 			if($params == "none"){
 				$result = sqlsrv_query($conn, $sql);
@@ -32,6 +34,7 @@
 				sqlsrv_close($conn);
 
 				return json_encode($json);
+				$conn = null;
 			}
 		}
 		catch(Exception $e)
