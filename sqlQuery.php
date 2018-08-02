@@ -1,7 +1,7 @@
 
 <?php
-	include "common/_connection.php"; //comment to use csc
-	//include "common/_connectionAzure.php"; //uncomment to use azure
+	//include "common/_connection.php"; //comment to use csc
+	include "common/_connectionAzure.php"; //uncomment to use azure
 
 	function sqlQuery($sql, $params)
 	{
