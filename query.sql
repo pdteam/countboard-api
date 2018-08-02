@@ -1,13 +1,7 @@
-create schema countboard;
+/****** Object:  Table [dbo].[tags]    Script Date: 2018-08-02 6:01:14 AM ******/
 
-/****** Object:  Table [countboard].[tags]    Script Date: 2018-07-27 6:54:01 AM ******/
-SET ANSI_NULLS ON
-GO
 
-SET QUOTED_IDENTIFIER ON
-GO
-
-CREATE TABLE [countboard].[tags](
+CREATE TABLE [dbo].[tags](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[uuid] [nvarchar](50) NOT NULL,
 	[rfid] [nvarchar](50) NULL,
@@ -18,6 +12,7 @@ CREATE TABLE [countboard].[tags](
 	[bedid] [nvarchar](50) NULL,
 	[facility] [nvarchar](50) NULL,
 	[location] [nvarchar](50) NULL,
+	[locationuuid] [nvarchar](50) NULL,
 	[longitude] [float] NULL,
 	[latitude] [float] NULL,
 	[description_en] [nvarchar](100) NULL,
@@ -29,20 +24,12 @@ PRIMARY KEY CLUSTERED
 (
 	[ID] ASC
 )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
+) ON [PRIMARY];
 
 
---
+/****** Object:  Table [dbo].[taps]    Script Date: 2018-08-02 6:01:57 AM ******/
 
-/****** Object:  Table [countboard].[taps]    Script Date: 2018-07-27 6:55:20 AM ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-CREATE TABLE [countboard].[taps](
+CREATE TABLE [dbo].[taps](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[uuid] [nvarchar](50) NOT NULL,
 	[device] [nvarchar](50) NULL,
@@ -61,6 +48,10 @@ PRIMARY KEY CLUSTERED
 	[ID] ASC
 )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
-GO
+
+
+
+
+
 
 
