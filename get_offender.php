@@ -1,7 +1,7 @@
 <?php
 
-header('Access-Control-Allow-Origin: *');
-//echo '[{"oid":"123"},{"response":"456"}]';
+include('common/_cors.php');
+//header('Access-Control-Allow-Origin: *');
 
 
 //get the variables from the URL instead of by name with  a regular GET command

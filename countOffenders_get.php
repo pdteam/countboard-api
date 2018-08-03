@@ -1,6 +1,7 @@
 <?php
 
-header('Access-Control-Allow-Origin: *');
+include('common/_cors.php');
+//header('Access-Control-Allow-Origin: *');
 
 //start of standard header
     include 'sqlQuery.php';
